@@ -11,7 +11,7 @@ struct Relato{
   float lon;
 };
 
-struct Relato relato[20];
+struct Relato relato[50];
 
 void cadastro_relatos(struct Relato *relato, int *n){
   *n -= 1;
