@@ -1,15 +1,8 @@
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-
-struct Relato{
-  char catastrofe[50];
-  char descricao[201];
-  char data[20];
-  int hora;
-  float lat;
-  float lon;
-};
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "structs.h"
+#include "funcoes.h"
 
 struct Relato relato[50];
 
@@ -40,9 +33,6 @@ void cadastro_relatos(struct Relato *relato, int *n){
   printf("Insira a localização do acontecimento (longitude): ");
   scanf("%f", &(relato[*n].lon));
   getchar();
-}
 
-int main(){
-  int n = 1;
-  cadastro_relatos(relato, &n);
+  *n += 2;
 }

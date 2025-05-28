@@ -2,21 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "structs.h"
+#include "funcoes.h"
 
-struct Cadastro{
-    char nome[100];
-    char telefone[100];
-    char documento[100];
-    char email[100];
-    float localizacao_lat;
-    float localizacao_lon;
-};
+int main(){
+  struct Cadastro relatores[20];
+  struct Relato relato[50];
+  int n_relatores = 1, n_relato = 1;
+  
+  CadastrarRelator(relatores, &n_relatores);
+  ExibirRelator(&relatores[n_relatores]);
+  cadastro_relatos(relato, &n_relato);
 
-struct Relato{
-  char catastrofe[50];
-  char descricao[201];
-  char data[20];
-  int hora;
-  float lat;
-  float lon;
+  return 0;
 };
