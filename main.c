@@ -17,10 +17,9 @@ struct Cadastro {
   char telefone[100];
   char documento[100];
   char email[100];
-  float localizacao_lat;
-  float localizacao_lon;
+  double localizacao_lat;
+  double localizacao_lon;
 };
-
 
 void cadastro_relator(struct Cadastro *relatores, int *n) {
 
@@ -41,11 +40,11 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
   fgets(relatores[*n].email, 100, stdin);
 
   printf("Digite sua localização (latitude): ");
-  scanf("%f", &(relatores[*n].localizacao_lat));
+  scanf("%lf", &(relatores[*n].localizacao_lat));
   getchar();
 
   printf("Digite sua localização (longitude): ");
-  scanf("%f", &(relatores[*n].localizacao_lon));
+  scanf("%lf", &(relatores[*n].localizacao_lon));
   getchar();
 
   *n += 2;
