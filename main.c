@@ -24,7 +24,7 @@ struct Cadastro {
 
 void cadastro_relator(struct Cadastro *relatores, int *n) {
 
-  printf("\n--- Cadastro do Relator ---\n\n", *n);
+  printf("\nCadastro do Relator\n\n");
   *n -= 1;
 
   printf("Digite seu nome completo: ");
@@ -54,8 +54,8 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
 void cadastro_relatos(struct Relato *relatos, int *n) {
   *n -= 1;
 
-  printf("\n--> Cadastro do Relato <--\n");
-  printf("\n--- Preencha as Informações Abaixo ---\n", *n);
+  printf("\nCadastro do Relato %d (máx: 50)\n", *n);
+  printf("\n--- Preencha as Informações Abaixo ---\n");
   
   printf("\nInsira o tipo de catástrofe ocorrida (ex: enchente, incêndio, deslizamento): ");
   scanf("%s", relatos[*n].catastrofe);
@@ -88,7 +88,7 @@ void cadastro_relatos(struct Relato *relatos, int *n) {
 
 void exibir_relator(struct Cadastro *relatores) {
 
-  printf("\n--> Relator(a) %s <--\n\n", relatores->nome);
+  printf("\n--> %s <--\n\n", relatores->nome);
 
   printf("Telefone: %s", relatores->telefone);
   printf("Documento: %s", relatores->documento);
@@ -109,12 +109,14 @@ void exibir_relatos(struct Relato *relatos, int n) {
 }
 
 void menu(int *opcao) {
-  printf("\n--- MENU ---\n");
-  printf("1. Cadastrar relato\n");
-  printf("2. Listar todos os relatos\n");
-  printf("3. Buscar por tipo\n");
-  printf("4. Buscar por localização\n");
-  printf("5. Buscar por período\n");
+  printf("\n \n---------------------------- MENU ----------------------------\n \n");
+
+  printf("O que deseja fazer?\n");
+  printf("1. Cadastrar Relato\n");
+  printf("2. Listar Todos os Relatos\n");
+  printf("3. Buscar por Tipo de Catástrofe\n");
+  printf("4. Buscar por Localização (até 10 km de você)\n");
+  printf("5. Buscar por Período\n");
   printf("6. Sair\n");
 
   printf("Escolha uma das opções: ");
