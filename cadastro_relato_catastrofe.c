@@ -54,7 +54,7 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
 void cadastro_relatos(struct Relato *relatos, int *n) {
     *n -= 1;
 
-    printf("\n--> Cadastro do Relato <--\n");
+    printf("\n--> Cadastro do Relato (máx: 50) <--\n");
     
     printf("\nInsira o tipo de catástrofe ocorrida (ex: enchente, incêndio, deslizamento): ");
     scanf("%s", relatos[*n].catastrofe);
