@@ -20,3 +20,8 @@ struct Relato{
   float lat;
   float lon;
 };
+
+int main(){
+  
+  return 0;
+}

@@ -23,8 +23,9 @@ struct Cadastro {
 };
 
 
-void CadastrarRelator(struct Cadastro *relatores, int *n) {
-    printf("\nRelator %d:\n\n", *n);
+void cadastro_relator(struct Cadastro *relatores, int *n) {
+
+    printf("\nCadastro Relator %d:\n\n", *n);
     *n -= 1;
 
     printf("Digite seu nome completo: ");
@@ -50,42 +51,44 @@ void CadastrarRelator(struct Cadastro *relatores, int *n) {
     *n += 2;
 }
 
-
-
-void cadastro_relatos(struct Relato *relato, int *n) {
+void cadastro_relatos(struct Relato *relatos, int *n) {
     *n -= 1;
 
+    printf("\n--> Cadastro do Relato <--\n");
+    
     printf("\nInsira o tipo de catástrofe ocorrida (ex: enchente, incêndio, deslizamento): ");
-    scanf("%s", relato[*n].catastrofe);
-    getchar(); // usado para limpar o buffer após o scanf, pois ficou gurdado no buffer o enter (\n) que faria com que encerrace o fgets assim que começasse
-
+    scanf("%s", relatos[*n].catastrofe);
+    getchar(); 
+    // usado para limpar o buffer após o scanf, pois ficou gurdado no buffer o enter (\n) que faria com que encerrace o fgets assim que começasse
 
     printf("Insira uma descrição da catástrofe (até 200 caracteres): ");
-    fgets(relato[*n].descricao, 201, stdin);
-    relato[*n].descricao[strcspn(relato[*n].descricao, "\n")] = '\0';  // como o fgets lê o \n quando o enter é pressionado precisamos tira-lo e substituímos por \0 que indica o fim da string que antes estava depois do \n
+    fgets(relatos[*n].descricao, 201, stdin);
+    relatos[*n].descricao[strcspn(relatos[*n].descricao, "\n")] = '\0';  // como o fgets lê o \n quando o enter é pressionado precisamos tira-lo e substituímos por \0 que indica o fim da string que antes estava depois do \n
 
 
     printf("Insira a data da catástrofe (DD/MM/AAAA): ");
-    scanf("%s", relato[*n].data);
+    scanf("%s", relatos[*n].data);
     getchar();
 
     printf("Insira a hora do dia em que ocorreu a catástrofe (ex: 19): ");
-    scanf("%i", &(relato[*n].hora));
+    scanf("%i", &(relatos[*n].hora));
     getchar();
 
     printf("Insira a localização do acontecimento (latitude): ");
-    scanf("%f", &(relato[*n].lat));
+    scanf("%f", &(relatos[*n].lat));
     getchar();
 
     printf("Insira a localização do acontecimento (longitude): ");
-    scanf("%f", &(relato[*n].lon));
+    scanf("%f", &(relatos[*n].lon));
     getchar();
 
     *n += 2;
 }
 
-void ExibirRelator(struct Cadastro *relatores, int n) {
-    printf("\n- Dados Cadastrados -\n\n");
+void exibir_relator(struct Cadastro *relatores, int n) {
+
+    printf("\n--> Relator %d <--\n\n", n);
+
     printf("Nome: %s", relatores->nome);
     printf("Telefone: %s", relatores->telefone);
     printf("Documento: %s", relatores->documento);
@@ -93,29 +96,36 @@ void ExibirRelator(struct Cadastro *relatores, int n) {
     printf("Latitude e Longitude: %.2f, %.2f\n", relatores->localizacao_lat, relatores->localizacao_lon);
 }
 
-void exibircatastrofe(struct Relato *relato, int n) {
-        printf("Catástrofe: %s\n", relato->catastrofe);
-        printf("Descrição: %s\n", relato->descricao);
-        printf("Data: %s\n", relato->data);
-        printf("Hora: %02d:00\n", relato->hora);
-        printf("Localização: %.2f, %.2f \n", relato->lat, relato->lon);
-        printf("\n");
-    }
+void exibir_relatos(struct Relato *relatos, int n) {
+
+    printf("\n--> Exibição do Relato %d <--\n\n", n);
+
+    printf("Catástrofe: %s\n", relatos->catastrofe);
+    printf("Descrição: %s\n", relatos->descricao);
+    printf("Data: %s\n", relatos->data);
+    printf("Hora: %02d:00\n", relatos->hora);
+    printf("Localização: %.2f, %.2f \n", relatos->lat, relatos->lon);
+    printf("\n");
+}
 
 
 int main() {
-    struct Relato relatos[50];
-    struct Cadastro relatores[20];
+
+    // Criação Variáveis Struct
+    struct Relato relatos[50]; // 50 relatos possíveis
+    struct Cadastro relatores[20]; // 20 relatores possíveis
+
+    // Criação de variáveis para administrar o número de relatos e relatores já cadastrados
     int n_relato = 1;
     int n_relator = 1;
 
     // Cadastros
-    CadastrarRelator(relatores, &n_relator);
-    cadastro_relatos(relatos, &n_relato);
+    cadastro_relator(relatores, &n_relato);
+    cadastro_relatos(relatos, &n_relator);
 
     // Exibições
-    ExibirRelator(relatores, n_relator);
-    exibircatastrofe(relatos, n_relato);
+    exibir_relator(relatores, n_relator);
+    exibir_relatos(relatos, n_relato);
 
     return 0;
 }
