@@ -3,6 +3,9 @@
 #include <string.h>
 #include <math.h>
 
+#define EARTH_RADIUS_KM 6371.0
+#define PI 3.141592653589793
+
 struct Relato {
   char catastrofe[50];
   char descricao[201];
@@ -49,6 +52,7 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
 
   *n += 2;
 }
+
 
 void cadastro_relatos(struct Relato *relatos, int *n) {
 
@@ -108,6 +112,80 @@ void exibir_relatos(struct Relato *relatos, int n) {
   printf("\n");
 }
 
+double deg2rad(double deg){
+  return deg * (PI / 180);
+}
+
+double haversine(double lat1, double lon1, double lat2, double lon2){
+  // converte graus para radianos
+  lat1 = deg2rad(lat1);
+  lon1 = deg2rad(lon1);
+  lat2 = deg2rad(lat2);
+  lon2 = deg2rad(lon2);
+
+  // diferença entre as coordenadas 
+
+  double dlat = lat2 - lat1;
+  double dlon = lon2 - lon1;
+
+  // fórmula de haversine
+
+  double a = pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+  // retorna a distância
+  return EARTH_RADIUS_KM * c;
+}
+
+int busca_por_data(char *data1, char *data2){
+  // criação das variáveis
+  int d1, m1, a1;
+  int d2, m2, a2;
+
+  // Extrai parte das datas
+
+  sscanf(data1, "%d/%d/%d", &d1, &m1, &a1);
+  sscanf(data2, "%d/%d/%d", &d2, &m2, &a2);
+  
+  // para comparar mes ano e dia em ordem
+
+  // Comparação de Ano
+  if(a1 > a2){
+    
+    return 1;
+
+  }
+  else if(a1 == a2){
+    
+    // Comparação de Mês
+    if(m1 > m2){
+
+      return 1;
+
+    }
+    else if(m1 == m2){
+
+      // Comparação de dia
+      if(d1 >= d2){
+
+        return 1;
+
+      }
+      else{
+        return 0;
+      }
+
+    }
+    else{
+      return 0;
+    }
+
+  }
+  else{
+    return 0;
+  }
+}
+
 void menu(int *opcao) {
   printf("\n \n---------------------------- MENU ----------------------------\n \n");
 
@@ -126,11 +204,14 @@ void menu(int *opcao) {
 int main() {
   struct Relato relatos[50];
   struct Cadastro relatores[20];
+  char data_busca[20];
   int n_relato = 1;
   int n_relator = 1;
   int opcao;
 
-  printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n --> Para fazer os relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema\n");
+  printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n"); 
+  printf("Esse é um sistema de cadastro e busca de relatos de desastres naturais com localização!\n");
+  printf("\n--> Para fazer e procurar relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema... \n");
   cadastro_relator(relatores, &n_relator);
   printf("\nCadastro realizado com sucesso!\n");
   printf("\nInformações: \n");
@@ -150,39 +231,72 @@ int main() {
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
       case 2:
-          for(int i = 0; i < n_relato -1; i++)
+          for(int i = 0; i < n_relato -1; i++){
+
               exibir_relatos(&relatos[i], i+1);
             printf("\nRelatos Listados com sucesso! \n");
-
+          }
       break;
       case 3:
-      printf("\n--> Busca por Tipo de Desastre Natural <--\n");
-      printf("\n");
-      char busca[50];
-      int encontrados = 0;
 
-      printf("Digite o tipo de desastre natural que deseja buscar: ");
-      scanf("%s", busca);
-      getchar();
+        // busca por tipo de desastre natural
+        
+        printf("\n--> Busca por Tipo de Desastre Natural <--\n");
+        printf("\n");
+        char busca[50];
+        int encontrados = 0;
 
-      for(int i = 0; i < n_relato; i++) {
-        if(strcmp(relatos[i].catastrofe, busca) == 0) {
-          exibir_relatos(&relatos[i], i+1);
-          encontrados++;
+        printf("Digite o tipo de desastre natural que deseja buscar: ");
+        scanf("%s", busca);
+        getchar();
+
+        for(int i = 0; i < n_relato; i++) {
+          if(strcmp(relatos[i].catastrofe, busca) == 0) {
+            exibir_relatos(&relatos[i], i+1);
+            encontrados++;
+          }
         }
-      }
 
-      if (encontrados == 0) {
-        printf("\nNenhum desastre natural do tipo \"%s\" foi encontrado.\n", busca);
-      } else {
-        printf("\n%d relato(s) do tipo \"%s\" encontrado(s).\n", encontrados, busca);
-      }
+        if (encontrados == 0) {
+          printf("\nNenhum desastre natural do tipo \"%s\" foi encontrado.\n", busca);
+        } else {
+          printf("\n%d relato(s) do tipo \"%s\" encontrado(s).\n", encontrados, busca);
+        }
 
       break;
       case 4:
+        // busca por localização
+        printf("\n\n--------------------------> Relatos que aconteceram até 10 KM de você <--------------------------\n");
 
+        for(int i = 0; i < (n_relato - 1); i++){
+          
+          double distancia = haversine(relatores[0].localizacao_lat, relatores[0].localizacao_lon, relatos[i].lat, relatos[i].lon);
+
+          if(distancia <= 10){
+            exibir_relatos(&relatos[i], i + 1);
+            printf("\nDistancia de você em KM: %.2f \n", distancia);
+          }
+          else{
+            continue; 
+          }
+
+        }
       break;
       case 5:
+        // buscar por período
+        printf("\n<--------------- BUSCA POR PERÍODO --------------->\n");
+        printf("Escolha uma data para buscar relatos cadastrados posteriormente: ");
+        scanf("%s", data_busca);
+        printf("\n");
+        printf("Relatos encontrados... \n");
+        for(int i = 0; i < (n_relato - 1); i++){
+          if(busca_por_data(relatos[i].data, data_busca) == 1){
+            exibir_relatos(&relatos[i], i + 1);
+          }
+          else{
+            continue;
+          }
+        }
 
       break;
       case 6:
