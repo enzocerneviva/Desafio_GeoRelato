@@ -149,6 +149,9 @@ int main() {
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
       case 2:
+          for(int i = 1; i < n_relator; i++)
+          exibir_relatos(&relatos[i], i);
+          printf("\nRelatos Listados com sucesso! \n");
 
       break;
       case 3:
