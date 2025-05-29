@@ -3,3 +3,5 @@ output/
 *.exe
 *.out
 cadastro_geral.c
+main_organizacao.c
+
