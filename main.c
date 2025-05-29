@@ -3,6 +3,9 @@
 #include <string.h>
 #include <math.h>
 
+#define EARTH_RADIUS_KM 6371.0
+#define PI 3.141592653589793
+
 struct Relato {
   char catastrofe[50];
   char descricao[201];
@@ -107,6 +110,31 @@ void exibir_relatos(struct Relato *relatos, int n) {
   printf("\n");
 }
 
+double deg2rad(double deg){
+  return deg * (PI / 180);
+}
+
+double haversine(double lat1, double lon1, double lat2, double lon2){
+  // converte graus para radianos
+  lat1 = deg2rad(lat1);
+  lon1 = deg2rad(lon1);
+  lat2 = deg2rad(lat2);
+  lon2 = deg2rad(lon2);
+
+  // diferença entre as coordenadas 
+
+  double dlat = lat2 - lat1;
+  double dlon = lon2 - lon1;
+
+  // fórmula de haversine
+
+  double a = pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+  // retorna a distância
+  return EARTH_RADIUS_KM * c;
+}
+
 void menu(int *opcao) {
   printf("\n \n---------------------------- MENU ----------------------------\n \n");
 
@@ -149,16 +177,16 @@ int main() {
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
       case 2:
-
+        // listagem dos relatos
       break;
       case 3:
-
+        // busca por catástrofe
       break;
       case 4:
-
+        // busca por localização
       break;
       case 5:
-
+        // buscar por período
       break;
       case 6:
 
