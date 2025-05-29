@@ -53,6 +53,7 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
   *n += 2;
 }
 
+
 void cadastro_relatos(struct Relato *relatos, int *n){
 
   printf("\nCadastro do Relato %d (máx: 50)\n", *n);
@@ -231,6 +232,9 @@ int main() {
       break;
       case 2:
         // listagem dos relatos
+          for(int i = 0; i < n_relator; i++)
+              exibir_relatos(&relatos[i], i+1);
+            printf("\nRelatos Listados com sucesso! \n");
       break;
       case 3:
         // busca por tipo de desastre natural
@@ -279,4 +283,3 @@ int main() {
   printf("\nPrograma encerrado.\n");
   return 0;
 }
-
