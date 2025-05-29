@@ -53,7 +53,6 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
   *n += 2;
 }
 
-
 void cadastro_relatos(struct Relato *relatos, int *n) {
 
   printf("\nCadastro do Relato %d (máx: 50)\n", *n);
