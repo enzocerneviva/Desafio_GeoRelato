@@ -51,11 +51,12 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
 }
 
 void cadastro_relatos(struct Relato *relatos, int *n) {
-  *n -= 1;
-
+  
   printf("\nCadastro do Relato %d (máx: 50)\n", *n);
   printf("\n--- Preencha as Informações Abaixo ---\n");
-  
+    
+  *n -= 1;
+
   printf("\nInsira o tipo de catástrofe ocorrida (ex: enchente, incêndio, deslizamento): ");
   scanf("%s", relatos[*n].catastrofe);
   getchar(); 
@@ -149,9 +150,9 @@ int main() {
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
       case 2:
-          for(int i = 1; i < n_relator; i++)
-          exibir_relatos(&relatos[i], i);
-          printf("\nRelatos Listados com sucesso! \n");
+          for(int i = 0; i < n_relator; i++)
+              exibir_relatos(&relatos[i], i+1);
+            printf("\nRelatos Listados com sucesso! \n");
 
       break;
       case 3:
@@ -172,4 +173,3 @@ int main() {
   printf("\nPrograma encerrado.\n");
   return 0;
 }
-
