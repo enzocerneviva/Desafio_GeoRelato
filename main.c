@@ -60,7 +60,7 @@ void cadastro_relatos(struct Relato *relatos, int *n){
 
   *n -= 1;
 
-  printf("\nInsira o tipo de catástrofe ocorrida (ex: enchente, incêndio, deslizamento): ");
+  printf("\nInsira o tipo de desastre natural ocorrido (ex: enchente, incêndio, deslizamento): ");
   scanf("%s", relatos[*n].catastrofe);
   getchar(); 
   // usado para limpar o buffer após o scanf, pois ficou gurdado no buffer o enter (\n) que faria com que encerrace o fgets assim que começasse
@@ -158,7 +158,9 @@ int main() {
   int n_relator = 1;
   int opcao;
 
-  printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n --> Para fazer os relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema... \n");
+  printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n"); 
+  printf("Esse é um sistema de cadastro e busca de relatos de desastres naturais com localização!\n");
+  printf("\n--> Para fazer e procurar relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema... \n");
   cadastro_relator(relatores, &n_relator);
   printf("\nCadastro realizado com sucesso!...\n");
   printf("\nInformações: \n");
