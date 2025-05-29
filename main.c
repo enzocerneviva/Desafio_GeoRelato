@@ -37,6 +37,11 @@ struct Cadastro {
   double localizacao_lon;
 };
 
+void validacao_loc(char *latitude, char *longitude){
+}
+
+void validacao_email(){}
+
 // Função para cadastrar um relator no sistema
 // Utiliza ponteiro para estrutura e manipulação de índice por referência
 void cadastro_relator(struct Cadastro *relatores, int *n) {
@@ -48,21 +53,21 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
   fgets(relatores[*n].nome, 100, stdin);
   relatores[*n].nome[strcspn(relatores[*n].nome, "\n")] = '\0'; // Remove o '\n' do final
 
-  printf("Digite seu telefone: ");
+  printf("Digite seu telefone (Ex: '11 99999-0000'): ");
   fgets(relatores[*n].telefone, 100, stdin);
 
-  printf("Digite seu documento: ");
+  printf("Digite seu documento (Ex: RG, CPF): ");
   fgets(relatores[*n].documento, 100, stdin);
 
   printf("Digite seu email: ");
   fgets(relatores[*n].email, 100, stdin);
 
   // Leitura da localização geográfica do relator
-  printf("Digite sua localização (latitude): ");
+  printf("Digite sua localização - latitude (Ex:'-00.0000'): ");
   scanf("%lf", &(relatores[*n].localizacao_lat));
   getchar();
 
-  printf("Digite sua localização (longitude): ");
+  printf("Digite sua localização - longitude (Ex:'-00.0000'): ");
   scanf("%lf", &(relatores[*n].localizacao_lon));
   getchar();
 
@@ -199,7 +204,7 @@ int main() {
 
   cadastro_relator(relatores, &n_relator); // Cadastro obrigatório do usuário ao iniciar o sistema
   printf(GREEN"\n✅ Cadastro realizado com sucesso!\n" RESET);
-  printf("\nInformações: \n");
+  printf(BOLD"\nInformações: \n"RESET);
   exibir_relator(relatores); // Exibe os dados do relator
 
   do {
