@@ -97,20 +97,20 @@ void cadastro_relatos(struct Relato *relatos, int *n) {
 // Função para exibir os dados do relator
 void exibir_relator(struct Cadastro *relatores) {
   printf("\n%s\n\n", relatores->nome);
-  printf("Telefone: %s", relatores->telefone);
-  printf("Documento: %s", relatores->documento);
-  printf("Email: %s", relatores->email);
+  printf("Telefone............: %s", relatores->telefone);
+  printf("Documento...........: %s", relatores->documento);
+  printf("Email...............: %s", relatores->email);
   printf("Latitude e Longitude: %.2f, %.2f\n", relatores->localizacao_lat, relatores->localizacao_lon);
 }
 
 // Função para exibir um relato específico
 void exibir_relatos(struct Relato *relatos, int n) {
   printf("\n--> Relato %d <--\n\n", n);
-  printf("Desastre Natural: %s\n", relatos->catastrofe);
-  printf("Descrição: %s\n", relatos->descricao);
-  printf("Data: %s\n", relatos->data);
-  printf("Hora: %s\n", relatos->hora);
-  printf("Localização: %.2f, %.2f \n", relatos->lat, relatos->lon);
+  printf("Desastre Natural....: %s\n", relatos->catastrofe);
+  printf("Descrição...........: %s\n", relatos->descricao);
+  printf("Data................: %s\n", relatos->data);
+  printf("Hora................: %s\n", relatos->hora);
+  printf("Localização.........: %.2f, %.2f \n", relatos->lat, relatos->lon);
   printf("\n");
 }
 
@@ -158,7 +158,6 @@ int busca_por_data(char *data1, char *data2){
 void menu(int *opcao) {
   printf("\n \n---------------------------- MENU ----------------------------\n \n");
 
-  printf("O que deseja fazer?\n");
   printf("1. Cadastrar Relato\n");
   printf("2. Listar Todos os Relatos\n");
   printf("3. Buscar por Tipo de Desastre Natural\n");
