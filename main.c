@@ -136,6 +136,55 @@ double haversine(double lat1, double lon1, double lat2, double lon2){
   return EARTH_RADIUS_KM * c;
 }
 
+int busca_por_data(char *data1, char *data2){
+  // criação das variáveis
+  int d1, m1, a1;
+  int d2, m2, a2;
+
+  // Extrai parte das datas
+
+  sscanf(data1, "%d/%d/%d", &d1, &m1, &a1);
+  sscanf(data2, "%d/%d/%d", &d2, &m2, &a2);
+  
+  // para comparar mes ano e dia em ordem
+
+  // Comparação de Ano
+  if(a1 > a2){
+    
+    return 1;
+
+  }
+  else if(a1 == a2){
+    
+    // Comparação de Mês
+    if(m1 > m2){
+
+      return 1;
+
+    }
+    else if(m1 == m2){
+
+      // Comparação de dia
+      if(d1 >= d2){
+
+        return 1;
+
+      }
+      else{
+        return 0;
+      }
+
+    }
+    else{
+      return 0;
+    }
+
+  }
+  else{
+    return 0;
+  }
+}
+
 void menu(int *opcao) {
   printf("\n \n---------------------------- MENU ----------------------------\n \n");
 
@@ -154,6 +203,7 @@ void menu(int *opcao) {
 int main() {
   struct Relato relatos[50];
   struct Cadastro relatores[20];
+  char data_busca[20];
   int n_relato = 1;
   int n_relator = 1;
   int opcao;
@@ -183,26 +233,42 @@ int main() {
         // listagem dos relatos
       break;
       case 3:
-        // busca por catástrofe
+        // busca por desastre natural
       break;
       case 4:
         // busca por localização
+        printf("\n\n--------------------------> Relatos que aconteceram até 10 KM de você <--------------------------\n");
 
         for(int i = 0; i < (n_relato - 1); i++){
           
           double distancia = haversine(relatores[0].localizacao_lat, relatores[0].localizacao_lon, relatos[i].lat, relatos[i].lon);
 
           if(distancia <= 10){
-          printf("\nrelato de %s, distancia de voce em km: %.2f \n\n", relatos[i].catastrofe, distancia);
+            exibir_relatos(&relatos[i], i + 1);
+            printf("\nDistancia de você em KM: %.2f \n", distancia);
           }
           else{
-            continue;
+            continue; 
           }
 
         }
       break;
       case 5:
         // buscar por período
+        printf("\n<--------------- BUSCA POR PERÍODO --------------->\n");
+        printf("Escolha uma data para buscar relatos cadastrados posteriormente: ");
+        scanf("%s", data_busca);
+        printf("\n");
+        printf("Relatos encontrados... \n");
+        for(int i = 0; i < (n_relato - 1); i++){
+          if(busca_por_data(relatos[i].data, data_busca) == 1){
+            exibir_relatos(&relatos[i], i + 1);
+          }
+          else{
+            continue;
+          }
+        }
+
       break;
       case 6:
 
