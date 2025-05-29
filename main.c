@@ -3,9 +3,11 @@
 #include <string.h>
 #include <math.h>
 
+// Constantes para o cálculo de distância com Haversine
 #define EARTH_RADIUS_KM 6371.0
 #define PI 3.141592653589793
 
+// Estrutura que representa um relato de desastre natural
 struct Relato {
   char catastrofe[50];
   char descricao[201];
@@ -15,6 +17,7 @@ struct Relato {
   float lon;
 };
 
+// Estrutura que representa o cadastro de um relator
 struct Cadastro {
   char nome[100];
   char telefone[100];
@@ -24,14 +27,16 @@ struct Cadastro {
   double localizacao_lon;
 };
 
+// Função para cadastrar um relator no sistema
+// Utiliza ponteiro para estrutura e manipulação de índice por referência
 void cadastro_relator(struct Cadastro *relatores, int *n) {
-
   printf("\nCadastro do Relator\n\n");
-  *n -= 1;
+
+  *n -= 1; // Ajuste temporário para usar o índice correto do vetor (trabalha com n-1)
 
   printf("Digite seu nome completo: ");
   fgets(relatores[*n].nome, 100, stdin);
-  relatores[*n].nome[strcspn(relatores[*n].nome, "\n")] = '\0';
+  relatores[*n].nome[strcspn(relatores[*n].nome, "\n")] = '\0'; // Remove o '\n' do final
 
   printf("Digite seu telefone: ");
   fgets(relatores[*n].telefone, 100, stdin);
@@ -42,6 +47,7 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
   printf("Digite seu email: ");
   fgets(relatores[*n].email, 100, stdin);
 
+  // Leitura da localização geográfica do relator
   printf("Digite sua localização (latitude): ");
   scanf("%lf", &(relatores[*n].localizacao_lat));
   getchar();
@@ -50,25 +56,23 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
   scanf("%lf", &(relatores[*n].localizacao_lon));
   getchar();
 
-  *n += 2;
+  *n += 2; // Corrige o índice para novos cadastros
 }
 
+// Função para cadastrar um novo relato
 void cadastro_relatos(struct Relato *relatos, int *n) {
-
   printf("\nCadastro do Relato %d (máx: 50)\n", *n);
   printf("\n--- Preencha as Informações Abaixo ---\n");
 
-  *n -= 1;
+  *n -= 1; // Ajuste para o índice correto do vetor
 
-  printf("\nInsira o tipo de desastre natural ocorrido (ex: enchente, incêndio, deslizamento): ");
+  printf("\nInsira o tipo de desastre natural ocorrido: ");
   scanf("%s", relatos[*n].catastrofe);
-  getchar(); 
-  // usado para limpar o buffer após o scanf, pois ficou gurdado no buffer o enter (\n) que faria com que encerrace o fgets assim que começasse
+  getchar(); // Limpa o buffer do scanf
 
   printf("Insira uma descrição do desastre natural(até 200 caracteres): ");
   fgets(relatos[*n].descricao, 201, stdin);
-  relatos[*n].descricao[strcspn(relatos[*n].descricao, "\n")] = '\0';  // como o fgets lê o \n quando o enter é pressionado precisamos tira-lo e substituímos por \0 que indica o fim da string que antes estava depois do \n
-
+  relatos[*n].descricao[strcspn(relatos[*n].descricao, "\n")] = '\0'; // Remove \n
 
   printf("Insira a data do desastre natural (DD/MM/AAAA): ");
   scanf("%s", relatos[*n].data);
@@ -86,23 +90,21 @@ void cadastro_relatos(struct Relato *relatos, int *n) {
   scanf("%f", &(relatos[*n].lon));
   getchar();
 
-  *n += 2;
+  *n += 2; // Corrige o índice novamente
 }
 
+// Função para exibir os dados do relator
 void exibir_relator(struct Cadastro *relatores) {
-
   printf("\n--> %s <--\n\n", relatores->nome);
-
   printf("Telefone: %s", relatores->telefone);
   printf("Documento: %s", relatores->documento);
   printf("Email: %s", relatores->email);
   printf("Latitude e Longitude: %.2f, %.2f\n", relatores->localizacao_lat, relatores->localizacao_lon);
 }
 
+// Função para exibir um relato específico
 void exibir_relatos(struct Relato *relatos, int n) {
-
   printf("\n--> Exibição do Relato %d <--\n\n", n);
-
   printf("Desastre Natural: %s\n", relatos->catastrofe);
   printf("Descrição: %s\n", relatos->descricao);
   printf("Data: %s\n", relatos->data);
@@ -111,80 +113,47 @@ void exibir_relatos(struct Relato *relatos, int n) {
   printf("\n");
 }
 
+// Função auxiliar para converter graus em radianos
 double deg2rad(double deg){
   return deg * (PI / 180);
 }
 
+// Implementação da fórmula de Haversine para calcular a distância entre dois pontos geográficos
 double haversine(double lat1, double lon1, double lat2, double lon2){
-  // converte graus para radianos
   lat1 = deg2rad(lat1);
   lon1 = deg2rad(lon1);
   lat2 = deg2rad(lat2);
   lon2 = deg2rad(lon2);
 
-  // diferença entre as coordenadas 
-
   double dlat = lat2 - lat1;
   double dlon = lon2 - lon1;
-
-  // fórmula de haversine
 
   double a = pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2);
   double c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
-  // retorna a distância
   return EARTH_RADIUS_KM * c;
 }
 
+// Função para comparar se data1 >= data2
 int busca_por_data(char *data1, char *data2){
-  // criação das variáveis
   int d1, m1, a1;
   int d2, m2, a2;
 
-  // Extrai parte das datas
-
   sscanf(data1, "%d/%d/%d", &d1, &m1, &a1);
   sscanf(data2, "%d/%d/%d", &d2, &m2, &a2);
-  
-  // para comparar mes ano e dia em ordem
 
-  // Comparação de Ano
-  if(a1 > a2){
-    
-    return 1;
-
-  }
-  else if(a1 == a2){
-    
-    // Comparação de Mês
-    if(m1 > m2){
-
-      return 1;
-
+  if (a1 > a2) return 1;
+  else if (a1 == a2) {
+    if (m1 > m2) return 1;
+    else if (m1 == m2) {
+      if (d1 >= d2) return 1;
     }
-    else if(m1 == m2){
-
-      // Comparação de dia
-      if(d1 >= d2){
-
-        return 1;
-
-      }
-      else{
-        return 0;
-      }
-
-    }
-    else{
-      return 0;
-    }
-
   }
-  else{
-    return 0;
-  }
+
+  return 0;
 }
 
+// Menu principal do programa
 void menu(int *opcao) {
   printf("\n \n---------------------------- MENU ----------------------------\n \n");
 
@@ -200,24 +169,26 @@ void menu(int *opcao) {
   scanf("%d", opcao);
 }
 
+// Função principal - Ponto de entrada do programa
 int main() {
-  struct Relato relatos[50];
-  struct Cadastro relatores[20];
+  struct Relato relatos[50];           // Vetor para armazenar até 50 relatos
+  struct Cadastro relatores[20];       // Vetor para armazenar até 20 relatores
   char data_busca[20];
-  int n_relato = 1;
-  int n_relator = 1;
+  int n_relato = 1;                    // Controla quantos relatos foram cadastrados
+  int n_relator = 1;                   // Controla os relatores cadastrados
   int opcao;
 
   printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n"); 
   printf("Esse é um sistema de cadastro e busca de relatos de desastres naturais com localização!\n");
   printf("\n--> Para fazer e procurar relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema... \n");
-  cadastro_relator(relatores, &n_relator);
+
+  cadastro_relator(relatores, &n_relator); // Cadastro obrigatório do usuário ao iniciar o sistema
   printf("\nCadastro realizado com sucesso!\n");
   printf("\nInformações: \n");
-  exibir_relator(relatores);
+  exibir_relator(relatores); // Exibe os dados do relator
 
   do {
-    menu(&opcao);
+    menu(&opcao); // Exibe o menu e coleta a opção do usuário
 
     if(opcao < 1 || opcao > 6){
       printf("\nOpção Inválida...\n");
@@ -229,19 +200,17 @@ int main() {
         cadastro_relatos(relatos, &n_relato);
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
+
       case 2:
-          for(int i = 0; i < n_relato -1; i++){
-
-              exibir_relatos(&relatos[i], i+1);
-            printf("\nRelatos Listados com sucesso! \n");
-          }
+        for(int i = 0; i < n_relato - 1; i++){
+          exibir_relatos(&relatos[i], i+1);
+        }
+        printf("\nRelatos Listados com sucesso! \n");
       break;
-      case 3:
 
-        // busca por tipo de desastre natural
-        
+      case 3:
+        // Busca relatos por tipo de desastre natural
         printf("\n--> Busca por Tipo de Desastre Natural <--\n");
-        printf("\n");
         char busca[50];
         int encontrados = 0;
 
@@ -256,53 +225,45 @@ int main() {
           }
         }
 
-        if (encontrados == 0) {
+        if (encontrados == 0)
           printf("\nNenhum desastre natural do tipo \"%s\" foi encontrado.\n", busca);
-        } else {
+        else
           printf("\n%d relato(s) do tipo \"%s\" encontrado(s).\n", encontrados, busca);
-        }
-
       break;
+
       case 4:
-        // busca por localização
+        // Busca relatos a até 10km da localização do usuário
         printf("\n\n--------------------------> Relatos que aconteceram até 10 KM de você <--------------------------\n");
 
         for(int i = 0; i < (n_relato - 1); i++){
-          
           double distancia = haversine(relatores[0].localizacao_lat, relatores[0].localizacao_lon, relatos[i].lat, relatos[i].lon);
 
           if(distancia <= 10){
             exibir_relatos(&relatos[i], i + 1);
-            printf("\nDistancia de você em KM: %.2f \n", distancia);
+            printf("\nDistância de você em KM: %.2f \n", distancia);
           }
-          else{
-            continue; 
-          }
-
         }
       break;
+
       case 5:
-        // buscar por período
+        // Busca relatos por data mínima
         printf("\n<--------------- BUSCA POR PERÍODO --------------->\n");
         printf("Escolha uma data para buscar relatos cadastrados posteriormente: ");
         scanf("%s", data_busca);
-        printf("\n");
-        printf("Relatos encontrados... \n");
+        printf("\nRelatos encontrados... \n");
+
         for(int i = 0; i < (n_relato - 1); i++){
           if(busca_por_data(relatos[i].data, data_busca) == 1){
             exibir_relatos(&relatos[i], i + 1);
           }
-          else{
-            continue;
-          }
         }
-
       break;
+
       case 6:
-
+        // Encerrar o programa
       break;
-    };
-  }while(opcao != 6);
+    }
+  } while(opcao != 6);
 
   printf("\nPrograma encerrado.\n");
   return 0;
