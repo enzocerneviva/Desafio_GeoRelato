@@ -3,6 +3,16 @@
 #include <string.h>
 #include <math.h>
 
+#define RESET   "\033[0m"    // Volta ao estilo padrão
+#define RED     "\033[31m"   // Vermelho
+#define GREEN   "\033[32m"   // Verde
+#define YELLOW  "\033[33m"   // Amarelo
+#define BLUE    "\033[34m"   // Azul
+#define MAGENTA "\033[35m"   // Magenta
+#define CYAN    "\033[36m"   // Ciano
+#define BOLD    "\033[1m"    // Negrito
+#define CLEAR   "clear"      // Comando para limpar a tela (use "cls" se estiver no Windows)
+
 // Constantes para o cálculo de distância com Haversine
 #define EARTH_RADIUS_KM 6371.0
 #define PI 3.141592653589793
@@ -156,16 +166,21 @@ int busca_por_data(char *data1, char *data2){
 
 // Menu principal do programa
 void menu(int *opcao) {
-  printf("\n \n---------------------------- MENU ----------------------------\n \n");
+  system(CLEAR); // Limpa a tela
+  printf(BLUE "\n=======================" RESET);
+  printf(BOLD " GEORELATO - MENU " RESET);
+  printf(BLUE "=======================\n\n" RESET);
+  
+  printf(GREEN " 1 " RESET "- Cadastrar Relato\n");
+  printf(GREEN " 2 " RESET "- Listar Todos os Relatos\n");
+  printf(GREEN " 3 " RESET "- Buscar por Tipo de Desastre Natural\n");
+  printf(GREEN " 4 " RESET "- Buscar por Localização (até 10 km de você)\n");
+  printf(GREEN " 5 " RESET "- Buscar por Período\n");
+  printf(GREEN " 6 " RESET "- Sair\n\n");
 
-  printf("1. Cadastrar Relato\n");
-  printf("2. Listar Todos os Relatos\n");
-  printf("3. Buscar por Tipo de Desastre Natural\n");
-  printf("4. Buscar por Localização (até 10 km de você)\n");
-  printf("5. Buscar por Período\n");
-  printf("6. Sair\n");
+  printf(BLUE"======================================================================================================\n" RESET);
 
-  printf("Escolha uma das opções: ");
+  printf(YELLOW "Escolha uma das opções: " RESET);
   scanf("%d", opcao);
 }
 
@@ -178,12 +193,12 @@ int main() {
   int n_relator = 1;                   // Controla os relatores cadastrados
   int opcao;
 
-  printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n"); 
-  printf("Esse é um sistema de cadastro e busca de relatos de desastres naturais com localização!\n");
-  printf("\nPara fazer e procurar relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema.\n");
+  printf(BLUE"\n---------------------------"RESET BOLD" Bem vindo(a) ao GeoRelato!"BLUE"---------------------------\n\n"RESET); 
+  printf(BOLD"Esse é um sistema de cadastro e busca de relatos de desastres naturais com localização!\n"RESET);
+  printf(YELLOW BOLD"\nPara fazer e procurar relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema.\n"RESET);
 
   cadastro_relator(relatores, &n_relator); // Cadastro obrigatório do usuário ao iniciar o sistema
-  printf("\nCadastro realizado com sucesso!\n");
+  printf(GREEN"\n✅ Cadastro realizado com sucesso!\n" RESET);
   printf("\nInformações: \n");
   exibir_relator(relatores); // Exibe os dados do relator
 
@@ -226,9 +241,9 @@ int main() {
         }
 
         if (encontrados == 0)
-          printf("\nNenhum desastre natural do tipo \"%s\" foi encontrado.\n", busca);
+          printf("\nNenhum Desastre Natural do Tipo \"%s\" Foi Encontrado.\n", busca);
         else
-          printf("\n%d relato(s) do tipo \"%s\" encontrado(s).\n", encontrados, busca);
+          printf("\n%d Relato(s) do Tipo \"%s\" Encontrado(s).\n", encontrados, busca);
       break;
 
       case 4:
