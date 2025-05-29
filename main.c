@@ -53,12 +53,13 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
   *n += 2;
 }
 
-void cadastro_relatos(struct Relato *relatos, int *n) {
-  *n -= 1;
+void cadastro_relatos(struct Relato *relatos, int *n){
 
   printf("\nCadastro do Relato %d (máx: 50)\n", *n);
   printf("\n--- Preencha as Informações Abaixo ---\n");
-  
+
+  *n -= 1;
+
   printf("\nInsira o tipo de catástrofe ocorrida (ex: enchente, incêndio, deslizamento): ");
   scanf("%s", relatos[*n].catastrofe);
   getchar(); 
@@ -158,7 +159,7 @@ int main() {
   int opcao;
 
   printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n --> Para fazer os relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema... \n");
-  cadastro_relator(relatores, &n_relato);
+  cadastro_relator(relatores, &n_relator);
   printf("\nCadastro realizado com sucesso!...\n");
   printf("\nInformações: \n");
   exibir_relator(relatores);
@@ -173,7 +174,7 @@ int main() {
 
     switch(opcao){
       case 1:
-        cadastro_relatos(relatos, &n_relator);
+        cadastro_relatos(relatos, &n_relato);
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
       case 2:
@@ -184,6 +185,19 @@ int main() {
       break;
       case 4:
         // busca por localização
+
+        for(int i = 0; i < (n_relato - 1); i++){
+          
+          double distancia = haversine(relatores[0].localizacao_lat, relatores[0].localizacao_lon, relatos[i].lat, relatos[i].lon);
+
+          if(distancia <= 10){
+          printf("\nrelato de %s, distancia de voce em km: %.2f \n\n", relatos[i].catastrofe, distancia);
+          }
+          else{
+            continue;
+          }
+
+        }
       break;
       case 5:
         // buscar por período
