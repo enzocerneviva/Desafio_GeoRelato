@@ -54,7 +54,7 @@ void cadastro_relator(struct Cadastro *relatores, int *n) {
 }
 
 
-void cadastro_relatos(struct Relato *relatos, int *n){
+void cadastro_relatos(struct Relato *relatos, int *n) {
 
   printf("\nCadastro do Relato %d (máx: 50)\n", *n);
   printf("\n--- Preencha as Informações Abaixo ---\n");
@@ -66,7 +66,7 @@ void cadastro_relatos(struct Relato *relatos, int *n){
   getchar(); 
   // usado para limpar o buffer após o scanf, pois ficou gurdado no buffer o enter (\n) que faria com que encerrace o fgets assim que começasse
 
-  printf("Insira uma descrição do desastre natural (até 200 caracteres): ");
+  printf("Insira uma descrição do desastre natural(até 200 caracteres): ");
   fgets(relatos[*n].descricao, 201, stdin);
   relatos[*n].descricao[strcspn(relatos[*n].descricao, "\n")] = '\0';  // como o fgets lê o \n quando o enter é pressionado precisamos tira-lo e substituímos por \0 que indica o fim da string que antes estava depois do \n
 
@@ -192,7 +192,7 @@ void menu(int *opcao) {
   printf("O que deseja fazer?\n");
   printf("1. Cadastrar Relato\n");
   printf("2. Listar Todos os Relatos\n");
-  printf("3. Buscar por Tipo de desastre natural\n");
+  printf("3. Buscar por Tipo de Desastre Natural\n");
   printf("4. Buscar por Localização (até 10 km de você)\n");
   printf("5. Buscar por Período\n");
   printf("6. Sair\n");
@@ -213,7 +213,7 @@ int main() {
   printf("Esse é um sistema de cadastro e busca de relatos de desastres naturais com localização!\n");
   printf("\n--> Para fazer e procurar relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema... \n");
   cadastro_relator(relatores, &n_relator);
-  printf("\nCadastro realizado com sucesso!...\n");
+  printf("\nCadastro realizado com sucesso!\n");
   printf("\nInformações: \n");
   exibir_relator(relatores);
 
@@ -231,13 +231,38 @@ int main() {
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
       case 2:
-        // listagem dos relatos
-          for(int i = 0; i < n_relator; i++)
+          for(int i = 0; i < n_relato -1; i++){
+
               exibir_relatos(&relatos[i], i+1);
             printf("\nRelatos Listados com sucesso! \n");
+          }
       break;
       case 3:
+
         // busca por tipo de desastre natural
+        
+        printf("\n--> Busca por Tipo de Desastre Natural <--\n");
+        printf("\n");
+        char busca[50];
+        int encontrados = 0;
+
+        printf("Digite o tipo de desastre natural que deseja buscar: ");
+        scanf("%s", busca);
+        getchar();
+
+        for(int i = 0; i < n_relato; i++) {
+          if(strcmp(relatos[i].catastrofe, busca) == 0) {
+            exibir_relatos(&relatos[i], i+1);
+            encontrados++;
+          }
+        }
+
+        if (encontrados == 0) {
+          printf("\nNenhum desastre natural do tipo \"%s\" foi encontrado.\n", busca);
+        } else {
+          printf("\n%d relato(s) do tipo \"%s\" encontrado(s).\n", encontrados, busca);
+        }
+
       break;
       case 4:
         // busca por localização
