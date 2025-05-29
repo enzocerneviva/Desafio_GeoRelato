@@ -65,16 +65,16 @@ void cadastro_relatos(struct Relato *relatos, int *n){
   getchar(); 
   // usado para limpar o buffer após o scanf, pois ficou gurdado no buffer o enter (\n) que faria com que encerrace o fgets assim que começasse
 
-  printf("Insira uma descrição da catástrofe (até 200 caracteres): ");
+  printf("Insira uma descrição do desastre natural (até 200 caracteres): ");
   fgets(relatos[*n].descricao, 201, stdin);
   relatos[*n].descricao[strcspn(relatos[*n].descricao, "\n")] = '\0';  // como o fgets lê o \n quando o enter é pressionado precisamos tira-lo e substituímos por \0 que indica o fim da string que antes estava depois do \n
 
 
-  printf("Insira a data da catástrofe (DD/MM/AAAA): ");
+  printf("Insira a data do desastre natural (DD/MM/AAAA): ");
   scanf("%s", relatos[*n].data);
   getchar();
 
-  printf("Insira a hora do dia em que ocorreu a catástrofe (ex: 19): ");
+  printf("Insira a hora do dia em que ocorreu o desastre natural (ex: 19): ");
   scanf("%i", &(relatos[*n].hora));
   getchar();
 
@@ -103,7 +103,7 @@ void exibir_relatos(struct Relato *relatos, int n) {
 
   printf("\n--> Exibição do Relato %d <--\n\n", n);
 
-  printf("Catástrofe: %s\n", relatos->catastrofe);
+  printf("Desastre Natural: %s\n", relatos->catastrofe);
   printf("Descrição: %s\n", relatos->descricao);
   printf("Data: %s\n", relatos->data);
   printf("Hora: %02d:00\n", relatos->hora);
@@ -191,7 +191,7 @@ void menu(int *opcao) {
   printf("O que deseja fazer?\n");
   printf("1. Cadastrar Relato\n");
   printf("2. Listar Todos os Relatos\n");
-  printf("3. Buscar por Tipo de Catástrofe\n");
+  printf("3. Buscar por Tipo de desastre natural\n");
   printf("4. Buscar por Localização (até 10 km de você)\n");
   printf("5. Buscar por Período\n");
   printf("6. Sair\n");
@@ -233,7 +233,7 @@ int main() {
         // listagem dos relatos
       break;
       case 3:
-        // busca por desastre natural
+        // busca por tipo de desastre natural
       break;
       case 4:
         // busca por localização
