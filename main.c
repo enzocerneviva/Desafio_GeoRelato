@@ -130,7 +130,7 @@ int main() {
   int opcao;
 
   printf("\n--------------------------- Bem vindo(a) ao GeoRelato! ---------------------------\n\n --> Para fazer os relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema... \n");
-  cadastro_relator(relatores, &n_relato);
+  cadastro_relator(relatores, &n_relator);
   printf("\nCadastro realizado com sucesso!...\n");
   printf("\nInformações: \n");
   exibir_relator(relatores);
@@ -145,7 +145,7 @@ int main() {
 
     switch(opcao){
       case 1:
-        cadastro_relatos(relatos, &n_relator);
+        cadastro_relatos(relatos, &n_relato);
         printf("\n Relato Cadastrado com sucesso! \n");
       break;
       case 2:
