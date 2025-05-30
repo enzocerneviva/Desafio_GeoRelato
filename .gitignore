@@ -4,3 +4,4 @@ output/
 *.out
 cadastro_geral.c
 main_organizacao.c
+main_interface.c

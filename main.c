@@ -171,7 +171,7 @@ int busca_por_data(char *data1, char *data2){
 
 // Menu principal do programa
 void menu(int *opcao) {
-  system(CLEAR); // Limpa a tela
+  
   printf(BLUE "\n=======================" RESET);
   printf(BOLD " GEORELATO - MENU " RESET);
   printf(BLUE "=======================\n\n" RESET);
@@ -203,7 +203,7 @@ int main() {
   printf(YELLOW BOLD"\nPara fazer e procurar relatos, por medidas de segurança, precisamos que você faça um cadastro em nosso sistema.\n"RESET);
 
   cadastro_relator(relatores, &n_relator); // Cadastro obrigatório do usuário ao iniciar o sistema
-  printf(GREEN"\n✅ Cadastro realizado com sucesso!\n" RESET);
+  printf(GREEN"\nCadastro realizado com sucesso!\n" RESET);
   printf(BOLD"\nInformações: \n"RESET);
   exibir_relator(relatores); // Exibe os dados do relator
 
