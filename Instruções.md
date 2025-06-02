@@ -33,8 +33,10 @@ Esse comando cria um programa chamado georelato (ou georelato.exe no Windows).
 
 Depois da compilação, execute o programa com:
 bash
+
 ./georelato       # No Linux/macOS
 
 Ou no Windows:
+
 cmd
 georelato.exe
