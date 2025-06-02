@@ -56,3 +56,19 @@ Localização (relatos a até 10 km da posição do usuário)
 Essas buscas foram implementadas utilizando laços de repetição (for) e condicionais (if) para comparar os dados do relato com os filtros informados pelo usuário. Para a busca por localização, reutilizamos a função de cálculo da distância com Haversine, garantindo que apenas relatos próximos sejam retornados.
 
 Além disso, usamos a função strcmp() da biblioteca <string.h> para comparar strings como o tipo de desastre, e operadores lógicos para validar intervalos de tempo e distância.
+
+### 7. Menu e Função Main
+
+A função main() foi organizada para simplesmente unir todas as informações e funções e deixar tudo funcional de fato. Logo na inicialização, o sistema realiza o cadastro da pessoa e armazena sua localização.
+
+Em seguida, mostramos ao usuário um menu com opções numeradas, que permitem executar as principais funcionalidades do sistema:
+
+ - Cadastrar um novo relato
+
+ - Listar todos os relatos
+
+ - Buscar relatos filtrando por tipo, ano ou localização
+
+ - Sair do programa
+
+Esse menu é exibido dentro de um laço do-while, que continua rodando até o usuário escolher a opção de sair. A escolha do usuário é lida e por meio de uma estrutura switch é executada uma das funcionalidades, garantindo uma navegação clara e organizada.
