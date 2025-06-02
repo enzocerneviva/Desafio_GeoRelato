@@ -5,10 +5,6 @@ Desenvolva uma interface de programação (API ou CLI) que permita o cadastro de
 
 ## Instruções de Execução (via Download ZIP)
 
-### 0. Organização do Projeto
-
-Para conseguirmos fazer todo o código em conjunto, decidimos utilizar o Github. Comçamos dividindo as funções de cadastro entre diferentes aquivos .c mas percebemos depois que seria mais prático criar branchs para depois juntar o código feito por cada integrante e unir filtrando algumas diferenças no final.
-
 ### 1. Baixe o projeto
 Acesse o repositório pelo navegador: 👉 https://github.com/enzocerneviva/Desafio_GeoRelato
 
@@ -40,6 +36,10 @@ Ou no Windows:
 cmd georelato.exe
 
 # Formulário do Projeto
+
+### 0. Organização do Projeto
+
+Para conseguirmos fazer todo o código em conjunto, decidimos utilizar o Github. Comçamos dividindo as funções de cadastro entre diferentes aquivos .c mas percebemos depois que seria mais prático criar branchs para depois juntar o código feito por cada integrante e unir filtrando algumas diferenças no final.
 
 ### 1. Biliotecas 
 
